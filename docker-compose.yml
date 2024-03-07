@@ -12,7 +12,9 @@ services:
     networks:
         - backend
   php-fpm:
-    image: php:8.2-fpm
+    build: 
+      context: ./php-fpm
+      dockerfile: Dockerfile
     volumes:
       - ./app:/var/www/html
     networks:
