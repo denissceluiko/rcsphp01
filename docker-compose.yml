@@ -9,7 +9,27 @@ services:
     environment:
     - NGINX_HOST=localhost
     - NGINX_PORT=80
+    networks:
+        - backend
   php-fpm:
     image: php:8.2-fpm
     volumes:
       - ./app:/var/www/html
+    networks:
+      - backend
+  mysql:
+    image: 'mysql/mysql-server:8.0'
+    ports:
+        - '3306:3306'
+    environment:
+        MYSQL_ROOT_PASSWORD: 'secret'
+        MYSQL_ROOT_HOST: '%'
+        MYSQL_DATABASE: 'default'
+        MYSQL_USER: 'user'
+        MYSQL_PASSWORD: 'secret'
+        MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    networks:
+        - backend
+networks:
+  backend:
+    driver: bridge
